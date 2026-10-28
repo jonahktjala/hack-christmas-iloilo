@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#HACK Christmas Hub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Participant hub for #HACK Christmas Iloilo: program, Discord, project submission, reminders and what's next.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;600;800&family=Noto+Sans:wght@400;500;700&family=Allison&display=swap">
+<style>
+/* Layout: a phone-first participant hub. Compact header, sticky tab bar, one panel at a time. Same dark #HACK Christmas look as the event site. */
+:root{
+  --ink:#0b0b0b; --panel:#161616; --line:#2a2826; --paper:#f4f2ec; --muted:#a9a59c;
+  --yellow:#EFE974; --orange:#EF4E25; --red:#F43F5E; --discord:#8f9cff;
+  --mono:"Noto Sans Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:"Noto Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --script:"Allison","Brush Script MT",cursive;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ink);color:var(--paper);font-family:var(--sans);font-size:1rem;line-height:1.6}
+a{color:var(--yellow);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:3px;border-radius:2px}
+.wrap{max-width:880px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h2{font-family:var(--mono);font-weight:800;font-size:clamp(1.6rem,1.3rem + 1.4vw,2.4rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance}
+h3{font-family:var(--mono);font-weight:600;font-size:1.1rem;margin:0 0 6px;line-height:1.25}
+p{margin:0;max-width:62ch}
+.muted{color:var(--muted)}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);margin:0 0 10px}
+.eyebrow::before{content:"> ";color:var(--orange)}
+.tba{display:inline-block;font-family:var(--mono);font-size:.78em;padding:1px 8px;border:1px dashed var(--yellow);color:var(--yellow);border-radius:4px;white-space:nowrap}
+
+/* header */
+.top{padding-block:28px 22px;border-bottom:1px solid var(--line)}
+.brandline{font-family:var(--mono);font-size:.8rem;letter-spacing:.2em;color:var(--orange);margin-bottom:14px}
+.brandline span{color:var(--paper)}
+.mark{margin:0;line-height:.9}
+.mark .hack{font-family:var(--mono);font-weight:800;font-size:clamp(2.6rem,2rem + 4vw,4.6rem);color:var(--orange);letter-spacing:-.04em}
+.mark .cursor{display:inline-block;width:.09em;height:.8em;background:var(--paper);margin-left:.04em;vertical-align:-.04em;animation:blink 1.05s steps(1) infinite}
+.mark .xmas{display:block;font-family:var(--script);font-weight:400;font-size:clamp(2.4rem,1.8rem + 4vw,4.2rem);margin:-.35em 0 0 .6em;transform:rotate(-4deg);line-height:1}
+.mark .hub{display:block;font-family:var(--mono);font-size:.85rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);margin-top:8px}
+@keyframes blink{50%{opacity:0}}
+.status{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.status .pill{font-family:var(--mono);font-size:.82rem;border:1px solid var(--line);background:var(--panel);padding:7px 12px;border-radius:6px}
+.status .pill b{color:var(--yellow);font-weight:600}
+.discord{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:600;text-decoration:none;color:#0b0b0b;background:var(--discord);padding:10px 16px;border-radius:8px}
+.discord:hover{filter:brightness(1.08)}
+.discord svg{width:20px;height:20px}
+
+/* tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ink);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+.tabs .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.tabs .wrap::-webkit-scrollbar{display:none}
+.tabs a{flex:0 0 auto;font-family:var(--mono);font-size:.85rem;font-weight:600;text-decoration:none;color:var(--muted);padding:14px 12px 12px;border-bottom:2px solid transparent;white-space:nowrap}
+.tabs a:hover{color:var(--paper)}
+.tabs a[aria-current="page"]{color:var(--paper);border-bottom-color:var(--orange)}
+
+.panel{padding-block:32px 64px}
+.panel + .panel{border-top:1px solid var(--line)}
+.lead{color:var(--muted);margin-bottom:22px}
+
+/* program */
+.days{display:grid;gap:18px}
+.day{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:0}
+.dayhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;padding:16px 18px;border-bottom:1px solid var(--line);background:var(--ink)}
+.dow{font-family:var(--mono);font-weight:800;font-size:1.2rem;color:var(--orange)}
+.date{font-family:var(--mono)}
+.place{margin-left:auto;font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--yellow)}
+.sched{list-style:none;margin:0;padding:4px 0}
+.row{display:grid;grid-template-columns:8.6em minmax(0,1fr);gap:12px;padding:10px 18px;border-left:3px solid transparent}
+.row + .row{border-top:1px solid var(--line)}
+.row time{font-family:var(--mono);font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px;white-space:nowrap}
+.row strong{font-weight:600}
+.row.sub div{padding-left:18px;position:relative}
+.row.sub div::before{content:"└";position:absolute;left:0;color:var(--muted);font-family:var(--mono)}
+.row.key{border-left-color:var(--orange)}
+.row.meal{border-left-color:var(--yellow)}
+.row.worship{border-left-color:var(--red)}
+.row.done{opacity:.45}
+.row.now{background:rgba(239,78,37,.12)}
+.now-tag{display:none;margin-left:8px;font-family:var(--mono);font-size:.7rem;padding:1px 8px;border-radius:999px;background:var(--yellow);color:#0b0b0b;vertical-align:1px}
+.row.now .now-tag{display:inline-block}
+.steps{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.steps li{font-family:var(--mono);font-size:.74rem;padding:2px 8px;border:1px solid var(--line);border-radius:4px;color:var(--muted)}
+.chip{display:inline-block;margin-left:4px;font-family:var(--mono);font-size:.7rem;padding:1px 8px;border-radius:999px;background:var(--orange);color:#120806;vertical-align:1px}
+.chip.ghost{background:transparent;border:1px solid var(--yellow);color:var(--yellow)}
+.legend{margin-top:16px;font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 10px}
+
+/* submit */
+.bigcta{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--orange);color:#120806;border-radius:10px;padding:22px}
+.bigcta h3{font-size:1.3rem}
+.bigcta p{color:#2a0f07}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-weight:600;text-decoration:none;padding:13px 20px;border-radius:8px;background:#0b0b0b;color:var(--yellow)}
+.btn:hover{transform:translateY(-1px)}
+.checklist{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.checklist li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;padding:14px 0;border-bottom:1px solid var(--line)}
+.checklist input{width:18px;height:18px;margin-top:3px;accent-color:var(--orange)}
+.checklist label{cursor:pointer}
+.checklist label b{font-family:var(--mono);font-weight:600}
+.checklist label span{display:block;color:var(--muted);font-size:.93rem}
+.progress{margin-top:12px;font-family:var(--mono);font-size:.82rem;color:var(--muted)}
+
+/* reminders */
+.framework{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:28px}
+.fw{background:var(--panel);padding:16px;min-width:0}
+.fw b{display:block;font-family:var(--mono);color:var(--orange);font-size:.95rem;margin-bottom:4px}
+.fw p{color:var(--muted);font-size:.9rem}
+.rem{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.rem li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:start}
+.rem .ic{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:var(--panel);border:1px solid var(--line);font-family:var(--mono);font-weight:800;color:var(--yellow);font-size:.9rem}
+.rem b{font-family:var(--mono);font-weight:600}
+.rem p{color:var(--muted);font-size:.95rem}
+.subhead{font-family:var(--mono);font-weight:800;font-size:1.25rem;margin:36px 0 14px}
+.verses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.verse{border-top:2px solid var(--yellow);padding-top:12px;min-width:0}
+.verse q{font-family:var(--script);font-size:2rem;line-height:1.05;display:block;quotes:none}
+.verse cite{display:block;margin-top:8px;font-family:var(--mono);font-style:normal;font-size:.78rem;letter-spacing:.1em;color:var(--orange)}
+.ideas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.idea{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.idea .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;color:var(--orange);text-transform:uppercase}
+.idea p{font-size:.95rem;margin-top:4px}
+
+/* global */
+.glist{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.gev{display:grid;grid-template-columns:6.4em minmax(0,1fr) auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:start}
+.gev time{font-family:var(--mono);font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px}
+.gev strong{font-weight:600}
+.gev p{color:var(--muted);font-size:.9rem}
+.gev p a{margin-left:6px;font-family:var(--mono);font-size:.82rem}
+.gev .kind{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:4px;border:1px solid var(--line);color:var(--muted)}
+.gev .kind.global{border-color:var(--discord);color:var(--discord)}
+.gev.here{background:rgba(239,78,37,.12);border-left:3px solid var(--orange);padding-left:10px}
+.gev.done{opacity:.4}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.filters button{font-family:var(--mono);font-size:.8rem;background:var(--panel);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--paper);color:#0b0b0b;border-color:var(--paper)}
+
+/* next */
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.card .when{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow)}
+.card p{color:var(--muted);font-size:.93rem;flex:1}
+.card a{font-family:var(--mono);font-weight:600;font-size:.88rem;margin-top:6px}
+.card.wide{grid-column:1/-1;border-color:var(--orange)}
+
+footer{padding-block:30px;border-top:1px solid var(--line)}
+footer p{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+
+@media (max-width:640px){
+  .framework{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .verses,.ideas,.cards{grid-template-columns:1fr}
+  .gev{grid-template-columns:5.6em minmax(0,1fr)}
+  .gev .kind{grid-column:2;justify-self:start}
+}
+@media (max-width:400px){.row{grid-template-columns:1fr;gap:2px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brandline">INDIGITOUS <span>ILOILO</span></div>
+    <h1 class="mark"><span class="hack">#HACK<span class="cursor" aria-hidden="true"></span></span><span class="xmas">Christmas</span><span class="hub">Participant hub</span></h1>
+    <div class="status">
+      <span class="pill" id="status-pill"><b>Nov 20, 5PM → Nov 21, 5PM</b> · ICMAC, Smallville</span>
+      <a class="discord" href="http://ndgt.us/discord" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.3 5.3A16.6 16.6 0 0 0 15.2 4l-.5 1a15.4 15.4 0 0 0-5.4 0l-.5-1a16.6 16.6 0 0 0-4.1 1.3C2.1 9.2 1.4 13 1.7 16.7a16.8 16.8 0 0 0 5 2.5l1.1-1.7a10.8 10.8 0 0 1-1.7-.8l.4-.3a11.9 11.9 0 0 0 11 0l.4.3c-.5.3-1.1.6-1.7.8l1.1 1.7a16.8 16.8 0 0 0 5-2.5c.4-4.3-.7-8-3-11.4ZM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
+        Join our Discord
+      </a>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Hub sections">
+  <div class="wrap">
+    <a href="#program" data-tab="program">Program</a>
+    <a href="#submit" data-tab="submit">Submit project</a>
+    <a href="#reminders" data-tab="reminders">Reminders</a>
+    <a href="#global" data-tab="global">Global #HACK</a>
+    <a href="#next" data-tab="next">What's next</a>
+  </div>
+</nav>
+
+<main>
+  <section class="panel" id="program" aria-labelledby="pg-h">
+    <div class="wrap">
+      <p class="eyebrow">Program</p>
+      <h2 id="pg-h">24 hours, start to ship</h2>
+      <p class="lead">All times are Philippine time. The current session lights up while the sprint is live.</p>
+      <div class="days">
+        <article class="day">
+          <header class="dayhead"><span class="dow">Friday</span><span class="date">Nov 20</span><span class="place">At ICMAC</span></header>
+          <ol class="sched"><li class="row" data-start="2026-11-20T16:00:00+08:00" data-end="2026-11-20T17:00:00+08:00"><time>4:00–5:00 PM</time><div><strong>Doors open</strong><span class="now-tag">Happening now</span></div></li><li class="row meal" data-start="2026-11-20T17:00:00+08:00" data-end="2026-11-20T17:30:00+08:00"><time>5:00–5:30 PM</time><div><strong>Registration, dinner &amp; networking</strong><span class="now-tag">Happening now</span></div></li><li class="row" data-start="2026-11-20T17:30:00+08:00" data-end="2026-11-20T17:40:00+08:00"><time>5:30–5:40 PM</time><div><strong>Welcome &amp; review format</strong><span class="now-tag">Happening now</span></div></li><li class="row sub worship" data-start="2026-11-20T17:40:00+08:00" data-end="2026-11-20T17:55:00+08:00"><time>5:40–5:55 PM</time><div><strong>Praise and worship</strong><span class="now-tag">Happening now</span></div></li><li class="row sub" data-start="2026-11-20T17:55:00+08:00" data-end="2026-11-20T18:05:00+08:00"><time>5:55–6:05 PM</time><div><strong>What is #HACK?</strong><span class="now-tag">Happening now</span></div></li><li class="row sub" data-start="2026-11-20T18:05:00+08:00" data-end="2026-11-20T18:10:00+08:00"><time>6:05–6:10 PM</time><div><strong>Why are we here?</strong><span class="now-tag">Happening now</span></div></li><li class="row" data-start="2026-11-20T18:10:00+08:00" data-end="2026-11-20T18:15:00+08:00"><time>6:10–6:15 PM</time><div><strong>Vision casting: evangelism to the next generation</strong><span class="now-tag">Happening now</span></div></li><li class="row key" data-start="2026-11-20T18:15:00+08:00" data-end="2026-11-20T18:30:00+08:00"><time>6:15–6:30 PM</time><div><strong>Official challenge</strong><span class="now-tag">Happening now</span><ul class="steps"><li>Opportunity</li><li>Problem</li><li>Persona</li><li>Prototype</li></ul></div></li><li class="row key" data-start="2026-11-20T18:30:00+08:00" data-end="2026-11-20T18:45:00+08:00"><time>6:30–6:45 PM</time><div><strong>Team formation</strong><span class="now-tag">Happening now</span></div></li><li class="row" data-start="2026-11-20T18:45:00+08:00" data-end="2026-11-20T19:45:00+08:00"><time>6:45–7:45 PM</time><div><strong>#HACK mechanics</strong><span class="now-tag">Happening now</span><ul class="steps"><li>Empathy mapping</li><li>Ideation</li><li>Implementation</li></ul></div></li><li class="row" data-start="2026-11-20T19:45:00+08:00" data-end="2026-11-20T19:50:00+08:00"><time>7:45–7:50 PM</time><div><strong>Conclusion &amp; announcements</strong><span class="now-tag">Happening now</span></div></li></ol>
+        </article>
+        <article class="day">
+          <header class="dayhead"><span class="dow">Saturday</span><span class="date">Nov 21</span><span class="place">Online → ICMAC</span></header>
+          <ol class="sched"><li class="row key" data-start="2026-11-21T00:00:00+08:00" data-end="2026-11-21T08:30:00+08:00"><time>12:00–8:30 AM</time><div><strong>Hack away</strong> <span class="chip">Online on Discord</span><span class="now-tag">Happening now</span></div></li><li class="row worship" data-start="2026-11-21T09:00:00+08:00" data-end="2026-11-21T09:30:00+08:00"><time>9:00–9:30 AM</time><div><strong>Devotions</strong><span class="now-tag">Happening now</span></div></li><li class="row" data-start="2026-11-21T09:30:00+08:00" data-end="2026-11-21T10:00:00+08:00"><time>9:30–10:00 AM</time><div><strong>Project refining</strong><span class="now-tag">Happening now</span></div></li><li class="row meal" data-start="2026-11-21T10:00:00+08:00" data-end="2026-11-21T11:00:00+08:00"><time>10:00–11:00 AM</time><div><strong>Mentoring with working snacks</strong><span class="now-tag">Happening now</span></div></li><li class="row meal" data-start="2026-11-21T11:00:00+08:00" data-end="2026-11-21T12:30:00+08:00"><time>11:00 AM–12:30 PM</time><div><strong>Lunch</strong><span class="now-tag">Happening now</span></div></li><li class="row" data-start="2026-11-21T12:30:00+08:00" data-end="2026-11-21T13:00:00+08:00"><time>12:30–1:00 PM</time><div><strong>Refine pitches</strong><span class="now-tag">Happening now</span></div></li><li class="row" data-start="2026-11-21T13:00:00+08:00" data-end="2026-11-21T13:10:00+08:00"><time>1:00–1:10 PM</time><div><strong>Photo ops</strong><span class="now-tag">Happening now</span></div></li><li class="row" data-start="2026-11-21T13:10:00+08:00" data-end="2026-11-21T14:00:00+08:00"><time>1:10–2:00 PM</time><div><strong>More development</strong><span class="now-tag">Happening now</span></div></li><li class="row key" data-start="2026-11-21T14:00:00+08:00" data-end="2026-11-21T16:00:00+08:00"><time>2:00–4:00 PM</time><div><strong>Presentations with working snacks</strong><span class="now-tag">Happening now</span></div></li><li class="row" data-start="2026-11-21T16:00:00+08:00" data-end="2026-11-21T16:00:00+08:00"><time>4:00 PM</time><div><strong>What's next?</strong><span class="now-tag">Happening now</span></div></li><li class="row" data-start="2026-11-21T16:00:00+08:00" data-end="2026-11-21T16:45:00+08:00"><time>4:00–4:45 PM</time><div><strong>Sharing time</strong><span class="now-tag">Happening now</span></div></li><li class="row" data-start="2026-11-21T16:45:00+08:00" data-end="2026-11-21T17:00:00+08:00"><time>4:45–5:00 PM</time><div><strong>Closing: wrap-up &amp; follow-up</strong><span class="now-tag">Happening now</span></div></li></ol>
+        </article>
+      </div>
+      <p class="legend"><i style="background:var(--orange);margin-left:0"></i>sprint milestones <i style="background:var(--yellow)"></i>meals &amp; snacks <i style="background:var(--red)"></i>worship &amp; devotions</p>
+    </div>
+  </section>
+
+  <section class="panel" id="submit" aria-labelledby="sb-h">
+    <div class="wrap">
+      <p class="eyebrow">Submit your project</p>
+      <h2 id="sb-h">Upload what you made</h2>
+      <p class="lead">Every team submits its project and photos to the official #HACK2026 collection, so Iloilo's work shows up alongside cities around the world.</p>
+      <div class="bigcta">
+        <div>
+          <h3>#HACK2026 project &amp; photo submission</h3>
+          <p>One submission per team. Submission deadline: <span class="tba" style="border-color:#120806;color:#120806">to be announced</span></p>
+        </div>
+        <a class="btn" href="https://airtable.com/appVd8sKsbP3H0A4e/pagb0qPKn7eW1O3q6/form" target="_blank" rel="noopener">Upload project ↗</a>
+      </div>
+      <ul class="checklist" id="checklist">
+        <li><input type="checkbox" id="ck1"><label for="ck1"><b>Project name and team members</b><span>Everyone's name, and who to contact about the project.</span></label></li>
+        <li><input type="checkbox" id="ck2"><label for="ck2"><b>Your persona and problem</b><span>Who you made this for, and what gap it fills for them this Christmas.</span></label></li>
+        <li><input type="checkbox" id="ck3"><label for="ck3"><b>A short description</b><span>Two or three sentences on what it is and how it shares the gospel.</span></label></li>
+        <li><input type="checkbox" id="ck4"><label for="ck4"><b>Links to your work</b><span>Video, design files, audio, writing, campaign deck or app. Set Google Drive, Canva and YouTube links so anyone can view.</span></label></li>
+        <li><input type="checkbox" id="ck5"><label for="ck5"><b>Your pitch slides</b><span>The deck or file you'll use in the 2:00 PM presentations.</span></label></li>
+        <li><input type="checkbox" id="ck6"><label for="ck6"><b>3 to 5 photos of your team at work</b><span>Ask before you photograph anyone, and only share photos of people who said yes.</span></label></li>
+      </ul>
+      <p class="progress" id="ck-progress" aria-live="polite">0 of 6 ready</p>
+    </div>
+  </section>
+
+  <section class="panel" id="reminders" aria-labelledby="rm-h">
+    <div class="wrap">
+      <p class="eyebrow">Reminders &amp; inspiration</p>
+      <h2 id="rm-h">Share the greatest gift this Christmas</h2>
+      <p class="lead">The challenge: share the gospel in the digital space with the next generation. Use the four parts from the official challenge to shape your idea.</p>
+      <div class="framework">
+        <div class="fw"><b>Opportunity</b><p>Christmas is when people are most open to talking about hope, family and meaning.</p></div>
+        <div class="fw"><b>Problem</b><p>What keeps young people from hearing or understanding the good news online?</p></div>
+        <div class="fw"><b>Persona</b><p>Picture one real person. Where do they scroll? What do they feel this season?</p></div>
+        <div class="fw"><b>Prototype</b><p>Make the smallest real version you can post, play or show by Saturday.</p></div>
+      </div>
+
+      <h3 class="subhead">Before you go</h3>
+      <ul class="rem">
+        <li><span class="ic">01</span><div><b>Join Discord before you leave on Friday</b><p>There's no overnight stay at ICMAC. Your team keeps building online through the night at <a href="http://ndgt.us/discord" target="_blank" rel="noopener">ndgt.us/discord</a>.</p></div></li>
+        <li><span class="ic">02</span><div><b>Get home safe, then hack</b><p>Travel home with a buddy where you can and tell your family where you are. Rest is part of the plan. A tired team makes slower work.</p></div></li>
+        <li><span class="ic">03</span><div><b>Be back at ICMAC by 9:00 AM Saturday</b><p>We start the day together with devotions at 9:00.</p></div></li>
+        <li><span class="ic">04</span><div><b>Save to the cloud, often</b><p>Keep your files in one shared folder your whole team can open. Don't let a dead laptop end your project.</p></div></li>
+        <li><span class="ic">05</span><div><b>Use what you have the right to use</b><p>Stick to your own work or royalty-free music, images and fonts, and credit your sources. Borrowed content can get a post taken down.</p></div></li>
+        <li><span class="ic">06</span><div><b>Create with care</b><p>Ask before filming or photographing anyone. Not everyone here follows Jesus yet, so welcome every question and every teammate.</p></div></li>
+        <li><span class="ic">07</span><div><b>Charge everything</b><p>Bring your chargers and earphones on both days.</p></div></li>
+      </ul>
+
+      <h3 class="subhead">Remember why</h3>
+      <div class="verses">
+        <div class="verse"><q>Good news of great joy for all the people</q><cite>Luke 2:10</cite></div>
+        <div class="verse"><q>Work heartily, as for the Lord</q><cite>Colossians 3:23</cite></div>
+        <div class="verse"><q>Let your light shine before others</q><cite>Matthew 5:16</cite></div>
+      </div>
+
+      <h3 class="subhead">Idea starters</h3>
+      <div class="ideas">
+        <div class="idea"><span class="tag">Video &amp; reels</span><p>A 30-second retelling of the nativity as if it happened in Iloilo today.</p></div>
+        <div class="idea"><span class="tag">Graphic design</span><p>A carousel on gifts that fade versus the gift that lasts.</p></div>
+        <div class="idea"><span class="tag">Photography</span><p>A photo series of Ilonggo Christmas moments, each with a caption about hope.</p></div>
+        <div class="idea"><span class="tag">Music</span><p>A fresh arrangement of a carol your persona would actually add to their playlist.</p></div>
+        <div class="idea"><span class="tag">Writing</span><p>Spoken word for someone who feels alone during the holidays.</p></div>
+        <div class="idea"><span class="tag">Social media</span><p>A 12-day campaign leading up to Christmas, ready to schedule.</p></div>
+        <div class="idea"><span class="tag">Development</span><p>A chatbot or simple site that answers "Why do we celebrate Christmas?"</p></div>
+        <div class="idea"><span class="tag">Mix it up</span><p>Combine skills: a song, its lyric video, and the campaign that launches it.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="global" aria-labelledby="gl-h">
+    <div class="wrap">
+      <p class="eyebrow">Global #HACK2026</p>
+      <h2 id="gl-h">We're one city among many</h2>
+      <p class="lead">#HACK2026 is happening in cities around the world. Online calls are open to everyone, and times are shown in Philippine time.</p>
+      <div class="filters" role="group" aria-label="Filter events">
+        <button type="button" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="global" aria-pressed="false">Online calls</button>
+        <button type="button" data-filter="ph" aria-pressed="false">Philippines</button>
+      </div>
+      <ul class="glist" id="glist"><li class="gev" data-end="2026-10-31T23:59:00+08:00"><time>Oct 28–31</time><div><strong>Bujumbura, Burundi</strong> <p>On site</p></div><span class="kind local">Local</span></li><li class="gev" data-end="2026-10-28T23:59:00+08:00"><time>Oct 28</time><div><strong>Presentation Call (1)</strong> <p>9:00–10:15 PM PH time <a href="https://ndgt.us/hack2026-presentation-1" target="_blank" rel="noopener">Register ↗</a></p></div><span class="kind global">Global</span></li><li class="gev" data-end="2026-10-31T23:59:00+08:00"><time>Oct 31</time><div><strong>Connect Call (4)</strong> <p>9:00–10:00 PM PH time <a href="https://ndgt.us/hack2026-connect-4" target="_blank" rel="noopener">Register ↗</a></p></div><span class="kind global">Global</span></li><li class="gev" data-end="2026-11-04T23:59:00+08:00"><time>Nov 4</time><div><strong>Presentation Call (2)</strong> <p>9:00–10:15 PM PH time <a href="https://ndgt.us/hack2026-presentation-2" target="_blank" rel="noopener">Register ↗</a></p></div><span class="kind global">Global</span></li><li class="gev" data-end="2026-11-07T23:59:00+08:00"><time>Nov 5–7</time><div><strong>Freetown, Sierra Leone</strong> <p>On site</p></div><span class="kind local">Local</span></li><li class="gev" data-end="2026-11-08T23:59:00+08:00"><time>Nov 6–8</time><div><strong>Dar es Salaam, Tanzania</strong> <p>On site</p></div><span class="kind local">Local</span></li><li class="gev ph" data-end="2026-11-07T23:59:00+08:00"><time>Nov 7</time><div><strong>Laguna, Philippines</strong> <span class="chip ghost">Philippines</span><p>On site</p></div><span class="kind local">Local</span></li><li class="gev" data-end="2026-11-07T23:59:00+08:00"><time>Nov 7</time><div><strong>Brownwood TX, USA · Panama City, Panama</strong> <p>On site</p></div><span class="kind local">Local</span></li><li class="gev" data-end="2026-11-07T23:59:00+08:00"><time>Nov 7</time><div><strong>Connect Call (5)</strong> <p>9:00–10:00 PM PH time <a href="https://ndgt.us/hack2026-connect-5" target="_blank" rel="noopener">Register ↗</a></p></div><span class="kind global">Global</span></li><li class="gev" data-end="2026-11-11T23:59:00+08:00"><time>Nov 11</time><div><strong>Presentation Call (3)</strong> <p>9:00–10:15 PM PH time <a href="https://ndgt.us/hack2026-presentation-3" target="_blank" rel="noopener">Register ↗</a></p></div><span class="kind global">Global</span></li><li class="gev" data-end="2026-11-15T23:59:00+08:00"><time>Nov 13–15</time><div><strong>Lomé, Togo</strong> <p>On site</p></div><span class="kind local">Local</span></li><li class="gev" data-end="2026-11-14T23:59:00+08:00"><time>Nov 14</time><div><strong>Mzuzu, Malawi</strong> <p>On site</p></div><span class="kind local">Local</span></li><li class="gev ph here" data-end="2026-11-21T23:59:00+08:00"><time>Nov 20–21</time><div><strong>Iloilo, Philippines</strong> <span class="chip">That's us!</span><p>ICMAC, Smallville</p></div><span class="kind local">Local</span></li><li class="gev" data-end="2026-11-20T23:59:00+08:00"><time>Nov 20</time><div><strong>Neuquén, Argentina</strong> <p>On site</p></div><span class="kind local">Local</span></li><li class="gev" data-end="2026-11-28T23:59:00+08:00"><time>Nov 26–28</time><div><strong>Bandung, Indonesia</strong> <p>On site</p></div><span class="kind local">Local</span></li><li class="gev ph" data-end="2026-11-28T23:59:00+08:00"><time>Nov 27–28</time><div><strong>Manila, Philippines</strong> <span class="chip ghost">Philippines</span><p>On site</p></div><span class="kind local">Local</span></li><li class="gev" data-end="2026-11-29T23:59:00+08:00"><time>Nov 27–29</time><div><strong>Singapore · Beira, Mozambique</strong> <p>On site</p></div><span class="kind local">Local</span></li><li class="gev" data-end="2026-12-05T23:59:00+08:00"><time>Dec 5</time><div><strong>#HACK2026 Celebration</strong> <p>9:00–10:00 PM PH time <a href="https://ndgt.us/hack2026-celebration" target="_blank" rel="noopener">Register ↗</a></p></div><span class="kind global">Global</span></li><li class="gev" data-end="2026-12-08T23:59:00+08:00"><time>Dec 8</time><div><strong>Post #HACK Event for Creators</strong> <p>9:00–10:00 PM PH time <a href="https://ndgt.us/post-hack2026-creators" target="_blank" rel="noopener">Register ↗</a></p></div><span class="kind global">Global</span></li><li class="gev" data-end="2026-12-09T23:59:00+08:00"><time>Dec 9</time><div><strong>Post #HACK Event for Developers</strong> <p>9:00–10:30 PM PH time <a href="https://ndgt.us/post-hack2026-developers" target="_blank" rel="noopener">Register ↗</a></p></div><span class="kind global">Global</span></li><li class="gev" data-end="2026-12-10T23:59:00+08:00"><time>Dec 10</time><div><strong>Post #HACK Event for Gamers</strong> <p>9:00–10:30 PM PH time <a href="https://ndgt.us/post-hack2026-gamers" target="_blank" rel="noopener">Register ↗</a></p></div><span class="kind global">Global</span></li></ul>
+      <p class="legend" style="margin-top:14px">Full calendar: <a href="https://hack.indigitous.org/upcoming-hack-events/" target="_blank" rel="noopener">hack.indigitous.org/upcoming-hack-events</a></p>
+    </div>
+  </section>
+
+  <section class="panel" id="next" aria-labelledby="nx-h">
+    <div class="wrap">
+      <p class="eyebrow">What's next</p>
+      <h2 id="nx-h">Keep building after #HACK</h2>
+      <p class="lead">The sprint ends Saturday at 5PM. What you started doesn't have to.</p>
+      <div class="cards">
+        <article class="card wide"><span class="when">Right after #HACK</span><h3>Submit your photos &amp; projects</h3><p>Share what your team made with the global #HACK2026 collection.</p><a href="https://ndgt.us/submit-presentation" target="_blank" rel="noopener">Submit ↗</a></article>
+        <article class="card"><span class="when">Dec 5 · 9–10 PM PH</span><h3>#HACK2026 Celebration</h3><p>An online call celebrating what God did through #HACK2026 and everyone who took part.</p><a href="https://ndgt.us/hack2026-celebration" target="_blank" rel="noopener">Register ↗</a></article>
+        <article class="card"><span class="when">Dec 8 · 9–10 PM PH</span><h3>Post #HACK event for creators</h3><p>For Christian content creators exploring what came out of #HACK.</p><a href="https://ndgt.us/post-hack2026-creators" target="_blank" rel="noopener">Register ↗</a></article>
+        <article class="card"><span class="when">Dec 9 · 9–10:30 PM PH</span><h3>Post #HACK event for developers</h3><p>For Christian developers, designers and product managers to connect and show their work.</p><a href="https://ndgt.us/post-hack2026-developers" target="_blank" rel="noopener">Register ↗</a></article>
+        <article class="card"><span class="when">Dec 10 · 9–10:30 PM PH</span><h3>Post #HACK event for gamers</h3><p>For Christian gamers, streamers and game builders bringing their faith into the spaces they love.</p><a href="https://ndgt.us/post-hack2026-gamers" target="_blank" rel="noopener">Register ↗</a></article>
+        <article class="card"><span class="when">Starts February 2027</span><h3>Leadership Lab</h3><p>A 5-week experience for followers of Jesus on how faith and innovation come together.</p><a href="https://indigitous.org/join/landing-page-leadership-lab-3-0/" target="_blank" rel="noopener">Register ↗</a></article>
+        <article class="card"><span class="when">Anytime</span><h3>#HACK resources</h3><p>Tools and guides to keep building your project after the weekend.</p><a href="https://hack.indigitous.org/resources/" target="_blank" rel="noopener">Explore ↗</a></article>
+        <article class="card"><span class="when">Anytime</span><h3>Get all the links by email</h3><p>Sign up on the #HACK site to receive every next step in your inbox.</p><a href="https://hack.indigitous.org/whats-next-after-hack2026/" target="_blank" rel="noopener">Open page ↗</a></article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Questions? Jonah · 0916 245 1641 · #HACK is an initiative of Indigitous</p>
+  </div>
+</footer>
+
+<script>
+/* Tabs: show one panel at a time, chosen from the link hash */
+class TabNav {
+  constructor(links, panels, start) { this.links = links; this.panels = panels; this.start = start; }
+  show(name) {
+    if (!this.panels.some(p => p.id === name)) name = this.start;
+    this.panels.forEach(p => { p.hidden = p.id !== name; });
+    this.links.forEach(a => { if (a.dataset.tab === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  }
+  wire() {
+    const go = () => this.show(location.hash.slice(1));
+    window.addEventListener("hashchange", () => { go(); window.scrollTo({ top: document.querySelector(".tabs").offsetTop }); });
+    go();
+  }
+}
+
+/* Live program: dim past sessions, highlight the current one */
+class LiveSchedule {
+  constructor(rows, pill) { this.rows = rows; this.pill = pill; }
+  update(now = Date.now()) {
+    let current = null;
+    this.rows.forEach(r => {
+      const s = Date.parse(r.dataset.start), e = Date.parse(r.dataset.end);
+      const isNow = now >= s && (now < e || (s === e && now < s + 60000));
+      r.classList.toggle("now", isNow);
+      r.classList.toggle("done", now >= e && !isNow);
+      if (isNow) current = r.querySelector("strong").textContent;
+    });
+    if (current) this.pill.innerHTML = "<b>Now:</b> " + current;
+  }
+  start() { this.update(); setInterval(() => this.update(), 30000); }
+}
+
+/* Global events: dim finished ones and filter */
+class GlobalList {
+  constructor(items, buttons) { this.items = items; this.buttons = buttons; }
+  markPast(now = Date.now()) { this.items.forEach(li => li.classList.toggle("done", now > Date.parse(li.dataset.end))); }
+  filter(kind) {
+    this.buttons.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter === kind)));
+    this.items.forEach(li => {
+      const isGlobal = li.querySelector(".kind").textContent.trim() === "Global";
+      li.hidden = kind === "global" ? !isGlobal : kind === "ph" ? !li.classList.contains("ph") : false;
+    });
+  }
+  wire() { this.markPast(); this.buttons.forEach(b => b.addEventListener("click", () => this.filter(b.dataset.filter))); }
+}
+
+/* Submission checklist, remembered on this phone only */
+class Checklist {
+  constructor(boxes, out) { this.boxes = boxes; this.out = out; this.key = "hackxmas-checklist"; }
+  load() { try { const saved = JSON.parse(localStorage.getItem(this.key) || "[]"); this.boxes.forEach(b => { b.checked = saved.includes(b.id); }); } catch (e) {} }
+  save() { try { localStorage.setItem(this.key, JSON.stringify(this.boxes.filter(b => b.checked).map(b => b.id))); } catch (e) {} }
+  render() { const n = this.boxes.filter(b => b.checked).length; this.out.textContent = n === this.boxes.length ? "All set. Go upload it!" : `${n} of ${this.boxes.length} ready`; }
+  wire() { this.load(); this.render(); this.boxes.forEach(b => b.addEventListener("change", () => { this.save(); this.render(); })); }
+}
+
+new TabNav([...document.querySelectorAll(".tabs a")], [...document.querySelectorAll(".panel")], "program").wire();
+new LiveSchedule([...document.querySelectorAll(".sched .row")], document.getElementById("status-pill")).start();
+new GlobalList([...document.querySelectorAll("#glist .gev")], [...document.querySelectorAll(".filters button")]).wire();
+new Checklist([...document.querySelectorAll("#checklist input")], document.getElementById("ck-progress")).wire();
+</script>
+</body>
+</html>
