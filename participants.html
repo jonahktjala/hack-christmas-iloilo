@@ -48,6 +48,8 @@ p{margin:0;max-width:62ch}
 .discord{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:600;text-decoration:none;color:#0b0b0b;background:var(--discord);padding:10px 16px;border-radius:8px}
 .discord:hover{filter:brightness(1.08)}
 .discord svg{width:20px;height:20px}
+.persona-link{display:inline-flex;align-items:center;font-family:var(--mono);font-weight:600;font-size:.9rem;text-decoration:none;color:var(--paper);border:1px solid var(--orange);padding:9px 14px;border-radius:8px;min-height:44px}
+.persona-link:hover{background:var(--orange);color:#120806}
 
 /* tabs */
 .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ink);border-bottom:1px solid var(--line)}
@@ -96,6 +98,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .bigcta p{color:#2a0f07}
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-weight:600;text-decoration:none;padding:13px 20px;border-radius:8px;background:#0b0b0b;color:var(--yellow)}
 .btn:hover{transform:translateY(-1px)}
+.photocta{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px;margin-top:14px}
+.photocta h3{font-size:1.15rem}
+.photocta p{color:var(--muted)}
+.btn-yellow{background:var(--yellow);color:#0b0b0b}
 .checklist{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
 .checklist li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;padding:14px 0;border-bottom:1px solid var(--line)}
 .checklist input{width:18px;height:18px;margin-top:3px;accent-color:var(--orange)}
@@ -172,6 +178,7 @@ footer p{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.3 5.3A16.6 16.6 0 0 0 15.2 4l-.5 1a15.4 15.4 0 0 0-5.4 0l-.5-1a16.6 16.6 0 0 0-4.1 1.3C2.1 9.2 1.4 13 1.7 16.7a16.8 16.8 0 0 0 5 2.5l1.1-1.7a10.8 10.8 0 0 1-1.7-.8l.4-.3a11.9 11.9 0 0 0 11 0l.4.3c-.5.3-1.1.6-1.7.8l1.1 1.7a16.8 16.8 0 0 0 5-2.5c.4-4.3-.7-8-3-11.4ZM8.7 14.5c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
         Join our Discord
       </a>
+      <a class="persona-link" href="persona.html">Meet Nonoy, our persona →</a>
     </div>
   </div>
 </header>
@@ -210,13 +217,21 @@ footer p{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
     <div class="wrap">
       <p class="eyebrow">Submit your project</p>
       <h2 id="sb-h">Upload what you made</h2>
-      <p class="lead">Every team submits its project and photos to the official #HACK2026 collection, so Iloilo's work shows up alongside cities around the world.</p>
+      <p class="lead">Every team submits its project and signs up to present through the official #HACK2026 form, so Iloilo's work shows up alongside cities around the world. Photos go in their own upload below.</p>
+      <p class="lead" style="color:var(--paper)">After the sprint, Indigitous Iloilo will use your projects to launch campaigns online this Christmas, so what you make can help lead someone to Christ.</p>
       <div class="bigcta">
         <div>
-          <h3>#HACK2026 project &amp; photo submission</h3>
+          <h3>#HACK2026 Project Submission and Presentation Sign Up</h3>
           <p>One submission per team. Submission deadline: <span class="tba" style="border-color:#120806;color:#120806">to be announced</span></p>
         </div>
-        <a class="btn" href="https://airtable.com/appVd8sKsbP3H0A4e/pagb0qPKn7eW1O3q6/form" target="_blank" rel="noopener">Upload project ↗</a>
+        <a class="btn" href="https://airtable.com/appVd8sKsbP3H0A4e/pagb0qPKn7eW1O3q6/form" target="_blank" rel="noopener">Submit &amp; sign up ↗</a>
+      </div>
+      <div class="photocta">
+        <div>
+          <h3>Event photos</h3>
+          <p>Share your photos from #HACK Christmas Iloilo: your team at work, worship, presentations and the people you met.</p>
+        </div>
+        <a class="btn btn-yellow" href="http://ndgt.us/hackphotos" target="_blank" rel="noopener">Upload photos ↗</a>
       </div>
       <ul class="checklist" id="checklist">
         <li><input type="checkbox" id="ck1"><label for="ck1"><b>Project name and team members</b><span>Everyone's name, and who to contact about the project.</span></label></li>
@@ -224,7 +239,7 @@ footer p{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
         <li><input type="checkbox" id="ck3"><label for="ck3"><b>A short description</b><span>Two or three sentences on what it is and how it shares the gospel.</span></label></li>
         <li><input type="checkbox" id="ck4"><label for="ck4"><b>Links to your work</b><span>Video, design files, audio, writing, campaign deck or app. Set Google Drive, Canva and YouTube links so anyone can view.</span></label></li>
         <li><input type="checkbox" id="ck5"><label for="ck5"><b>Your pitch slides</b><span>The deck or file you'll use in the 2:00 PM presentations.</span></label></li>
-        <li><input type="checkbox" id="ck6"><label for="ck6"><b>3 to 5 photos of your team at work</b><span>Ask before you photograph anyone, and only share photos of people who said yes.</span></label></li>
+        <li><input type="checkbox" id="ck6"><label for="ck6"><b>3 to 5 photos of your team at work</b><span>Upload them at <a href="http://ndgt.us/hackphotos" target="_blank" rel="noopener">ndgt.us/hackphotos</a>. Ask before you photograph anyone, and only share photos of people who said yes.</span></label></li>
       </ul>
       <p class="progress" id="ck-progress" aria-live="polite">0 of 6 ready</p>
     </div>
@@ -238,7 +253,7 @@ footer p{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
       <div class="framework">
         <div class="fw"><b>Opportunity</b><p>Christmas is when people are most open to talking about hope, family and meaning.</p></div>
         <div class="fw"><b>Problem</b><p>What keeps young people from hearing or understanding the good news online?</p></div>
-        <div class="fw"><b>Persona</b><p>Picture one real person. Where do they scroll? What do they feel this season?</p></div>
+        <div class="fw"><b>Persona</b><p>Everyone builds for Nonoy, 19, from Jaro. <a href="persona.html">Meet him and fill in his story →</a></p></div>
         <div class="fw"><b>Prototype</b><p>Make the smallest real version you can post, play or show by Saturday.</p></div>
       </div>
 
@@ -295,7 +310,7 @@ footer p{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
       <h2 id="nx-h">Keep building after #HACK</h2>
       <p class="lead">The sprint ends Saturday at 5PM. What you started doesn't have to.</p>
       <div class="cards">
-        <article class="card wide"><span class="when">Right after #HACK</span><h3>Submit your photos &amp; projects</h3><p>Share what your team made with the global #HACK2026 collection.</p><a href="https://ndgt.us/submit-presentation" target="_blank" rel="noopener">Submit ↗</a></article>
+        <article class="card wide"><span class="when">Right after #HACK</span><h3>Submit your photos &amp; projects</h3><p>Submit your project and sign up to present, then share your event photos.</p><span style="display:flex;flex-wrap:wrap;gap:16px"><a href="https://airtable.com/appVd8sKsbP3H0A4e/pagb0qPKn7eW1O3q6/form" target="_blank" rel="noopener">Submit project ↗</a><a href="http://ndgt.us/hackphotos" target="_blank" rel="noopener">Upload photos ↗</a></span></article>
         <article class="card"><span class="when">Dec 5 · 9–10 PM PH</span><h3>#HACK2026 Celebration</h3><p>An online call celebrating what God did through #HACK2026 and everyone who took part.</p><a href="https://ndgt.us/hack2026-celebration" target="_blank" rel="noopener">Register ↗</a></article>
         <article class="card"><span class="when">Dec 8 · 9–10 PM PH</span><h3>Post #HACK event for creators</h3><p>For Christian content creators exploring what came out of #HACK.</p><a href="https://ndgt.us/post-hack2026-creators" target="_blank" rel="noopener">Register ↗</a></article>
         <article class="card"><span class="when">Dec 9 · 9–10:30 PM PH</span><h3>Post #HACK event for developers</h3><p>For Christian developers, designers and product managers to connect and show their work.</p><a href="https://ndgt.us/post-hack2026-developers" target="_blank" rel="noopener">Register ↗</a></article>
@@ -323,10 +338,20 @@ class TabNav {
     this.panels.forEach(p => { p.hidden = p.id !== name; });
     this.links.forEach(a => { if (a.dataset.tab === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
   }
+  open(name) {
+    this.show(name);
+    const tabs = document.querySelector(".tabs");
+    if (window.scrollY > tabs.offsetTop) window.scrollTo({ top: tabs.offsetTop });
+  }
   wire() {
-    const go = () => this.show(location.hash.slice(1));
-    window.addEventListener("hashchange", () => { go(); window.scrollTo({ top: document.querySelector(".tabs").offsetTop }); });
-    go();
+    this.links.forEach(a => a.addEventListener("click", e => {
+      e.preventDefault();
+      const name = a.dataset.tab;
+      this.open(name);
+      try { history.replaceState(null, "", "#" + name); } catch (err) {}
+    }));
+    window.addEventListener("hashchange", () => this.open(location.hash.slice(1)));
+    this.show(location.hash.slice(1));
   }
 }
 

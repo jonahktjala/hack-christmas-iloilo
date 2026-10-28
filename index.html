@@ -107,6 +107,11 @@ p{margin:0;max-width:62ch}
 /* challenge */
 .challenge{max-width:820px}
 
+/* launch note */
+.launch{margin-top:24px;padding:18px 20px;border:1px solid var(--orange);border-radius:10px;background:rgba(239,78,37,.08)}
+.launch-label{display:block;font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:4px}
+.launch p{max-width:none}
+
 /* heart & hands */
 .hh{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px}
 .hh-item{border-top:2px solid var(--yellow);padding-top:12px;min-width:0}
@@ -216,7 +221,7 @@ footer p{font-family:var(--mono);font-size:var(--step--1);color:var(--muted)}
 
 <header class="topbar">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Indigitous Iloilo, #HACK for Christmas home">
+    <a class="brand" href="https://www.facebook.com/indigitous.ilo" target="_blank" rel="noopener" aria-label="Indigitous Iloilo on Facebook (opens in a new tab)">
       <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="7" y="8" width="3" height="3" fill="currentColor"/><rect x="2" y="19" width="20" height="2.4" fill="currentColor"/></svg>
       <span>INDIGITOUS <span class="city">ILOILO</span></span>
     </a>
@@ -280,6 +285,10 @@ footer p{font-family:var(--mono);font-size:var(--step--1);color:var(--muted)}
         <p class="eyebrow">The challenge</p>
         <h2 id="ch-title">Share the greatest gift this Christmas.</h2>
         <p class="lede">Jesus is the best gift anyone will ever get, and your generation lives online. So for 24 hours, we build content that carries the gospel into the feeds, chats and screens of the next generation. It's a working sprint, not a night of talks: you'll form a team, bring your skills, get help from mentors, keep creating online on our Discord server overnight, and ship something real by 5PM the next day.</p>
+        <div class="launch">
+          <span class="launch-label">What happens after</span>
+          <p>Your project won't sit in a folder. Indigitous Iloilo will use what teams make to launch campaigns online this Christmas, so your work can help lead someone to Christ.</p>
+        </div>
         <div class="hh">
           <div class="hh-item"><span class="hh-label">Heart</span><p>Worship, devotions and vision casting that root what you make in the gospel and stir your love for the next generation.</p></div>
           <div class="hh-item"><span class="hh-label">Hands</span><p>Equipping in empathy mapping, ideation and implementation, plus mentors who help you sharpen your craft.</p></div>
@@ -368,6 +377,7 @@ footer p{font-family:var(--mono);font-size:var(--step--1);color:var(--muted)}
       <div class="faq">
         <details><summary>Do I need to know how to code?</summary><p>No. This is a creatives sprint. If you can make videos, design, take photos, write, make music or run social media, you belong here.</p></details>
         <details><summary>I'm not a Christian. Can I still come?</summary><p>Yes. Most participants come from churches, and you're welcome to join, create, and ask all your questions.</p></details>
+        <details><summary>What happens to our project after #HACK?</summary><p>Indigitous Iloilo will use the projects to launch campaigns online during Christmas, so what you make can help lead someone to Christ.</p></details>
         <details><summary>Do I need a team?</summary><p>No. Come with friends or come alone. We'll help you find a team at kickoff.</p></details>
         <details><summary>What should I bring?</summary><p>Your laptop or phone, chargers, earphones, any gear you create with (camera, instrument, drawing tablet), and a Discord account so your team can keep working online through the night.</p></details>
         <details><summary>Do we stay at the venue overnight?</summary><p>No. The sprint runs from 5PM Friday to 5PM Saturday, but there's no overnight stay at the venue. After Friday's session, teams keep creating online on our Discord server, which stays live the whole night. Discord invite: <span class="tba">coming soon</span></p></details>
